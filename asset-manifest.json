@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Phonebook-React-Redux-mockAPI/static/css/main.4fea2478.css",
+    "main.js": "/Phonebook-React-Redux-mockAPI/static/js/main.75658488.js",
+    "index.html": "/Phonebook-React-Redux-mockAPI/index.html",
+    "main.4fea2478.css.map": "/Phonebook-React-Redux-mockAPI/static/css/main.4fea2478.css.map",
+    "main.75658488.js.map": "/Phonebook-React-Redux-mockAPI/static/js/main.75658488.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4fea2478.css",
+    "static/js/main.75658488.js"
+  ]
+}
