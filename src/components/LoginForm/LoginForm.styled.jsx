@@ -1,30 +1,30 @@
 import styled from "@emotion/styled";
-// import { Form, Field, ErrorMessage } from "formik";
 
-export const ContactsForm = styled.form`
-  margin-bottom: 15px;
+export const Form = styled.form`
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  margin-top: 20px;
+  width: 320px;
 `;
 
-export const InputContainer = styled.div`
-  padding: 10px 0;
-  &:last-of-type {
-    margin-bottom: 10px;
-  }
+export const Label = styled.label`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15;
 `;
 
 export const Input = styled.input`
-  margin-left: 5px;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 14px;
   outline: none;
-  padding: 5px 10px;
-`;
-
-export const FormError = styled.p`
-  color: ${(props) => props.theme.colors.red};
 `;
 
 export const Button = styled.button`
   background-color: ${(props) => props.theme.colors.skyBlueDark};
-  color: white;
+  color: ${(props) => props.theme.colors.white};
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
@@ -32,10 +32,6 @@ export const Button = styled.button`
   font-weight: bold;
   transition: 0.3s;
   cursor: pointer;
-
-  &:not(:last-child) {
-    margin-right: 10px;
-  }
 
   &:hover,
   &:focus {

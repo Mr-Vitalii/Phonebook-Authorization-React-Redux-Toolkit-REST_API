@@ -1,8 +1,9 @@
-import { useDispatch } from "react-redux";
-import { addContact } from "redux/operations";
+import { useSelector, useDispatch } from "react-redux";
+import { addContact } from "redux/contacts/operations";
+import { selectContacts } from "redux/contacts/selectors";
 
-import { Formik } from "formik";
-import { object, string } from "yup";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import {
   Button,
   ContactsForm,
@@ -11,62 +12,78 @@ import {
   InputContainer,
 } from "./ContactForm .styled";
 
-const initialValues = {
-  name: "",
-  phone: "",
-};
-
-let userSchema = object({
-  name: string()
-    .required()
-    .matches(
-      /^[a-zA-Za-zA-Z]+(([' -][a-zA-Za-zA-Z ])?[a-zA-Za-zA-Z]*)*$/,
-      "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-    ),
-  phone: string()
-    .required()
-    .matches(
-      /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/,
-      "Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-    ),
-});
 
 const ContactForm = () => {
-
   const dispatch = useDispatch();
+  const contacts = useSelector(selectContacts);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
 
-  const handleSubmit = (values, { resetForm }) => {
-    dispatch(addContact(values));
-    resetForm();
+  const onSubmit = (data) => {
+    const { name, number } = data;
+
+    if (contacts.some((contact) => contact.name === name)) {
+      toast.error(`${name} is already in contacts`, {
+        duration: 3000,
+      });
+      return;
+    }
+    if (contacts.some((contact) => contact.number === number)) {
+      toast.error(`Number ${number} is already in contacts`, {
+        duration: 1500,
+      });
+      return;
+    }
+
+    dispatch(addContact(data));
+    reset();
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-      validationSchema={userSchema}
-    >
-      <ContactsForm>
-        <InputContainer>
-          <label>
-            Name:
-            <Input type="text" name="name" />
-            <FormError name="name" component="p" />
-          </label>
-        </InputContainer>
-        <InputContainer>
-          <label>
-            Phone:
-            <Input type="tel" name="phone" />
-          </label>
-          <FormError name="phone" component="p" />
-        </InputContainer>
-
-        <Button type="submit">Add contact</Button>
-      </ContactsForm>
-    </Formik>
+    <ContactsForm onSubmit={handleSubmit(onSubmit)}>
+      <InputContainer>
+        <label>
+          Name:
+          <Input
+            type="text"
+            {...register("name", {
+              required: true,
+              pattern: /^[a-zA-Z]+(([' -][a-zA-Z ])?[a-zA-Z]*)*$/,
+            })}
+          />
+          {errors.name && (
+            <FormError>
+              Name may contain only letters, apostrophe, dash and spaces.
+            </FormError>
+          )}
+        </label>
+      </InputContainer>
+      <InputContainer>
+        <label>
+          Phone:
+          <Input
+            type="tel"
+            {...register("number", {
+              required: true,
+              pattern:
+                /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/,
+            })}
+          />
+          {errors.number && (
+            <FormError>
+              Phone number must be digits and can contain spaces, dashes,
+              parentheses and can start with +
+            </FormError>
+          )}
+        </label>
+      </InputContainer>
+      <Button type="submit">Add contact</Button>
+    </ContactsForm>
   );
 };
-
 
 export { ContactForm };

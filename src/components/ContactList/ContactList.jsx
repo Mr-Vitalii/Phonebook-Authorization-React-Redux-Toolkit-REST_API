@@ -1,8 +1,8 @@
 import { DeleteButton, Item, List } from "./ContactList.styled";
 
 import { useSelector, useDispatch } from "react-redux";
-import { selectFilteredContacts } from "redux/selectors";
-import { deleteContact } from "redux/operations";
+import { selectFilteredContacts } from "redux/contacts/selectors";
+import { deleteContact } from "redux/contacts/operations";
 
 
 const ContactList = () => {
@@ -16,11 +16,11 @@ const ContactList = () => {
 
   return (
     <List>
-      {filteredContacts.map(({ name, phone, id }) => (
+      {filteredContacts.map(({ name, number, id }) => (
         <Item key={id}>
           <div>
             <span>{name}: </span>
-            <span>{phone}</span>
+            <span>{number}</span>
           </div>
           <DeleteButton onClick={() => handleDeleteContact(id)}>
             Delete

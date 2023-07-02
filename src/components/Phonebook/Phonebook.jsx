@@ -6,8 +6,8 @@ import { ContactsTitle } from "./Phonebook.styled";
 
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchContacts } from "redux/operations";
-import { selectIsLoading, selectError } from "redux/selectors";
+import { fetchContacts } from "redux/contacts/operations";
+import { selectIsLoading, selectError } from "redux/contacts/selectors";
 
 const Phonebook = () => {
 
