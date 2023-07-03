@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter  } from 'react-router-dom';
 import './index.css';
 import { ThemeProvider } from '@emotion/react';
 import { App } from './components/App/App';
@@ -18,9 +18,9 @@ root.render(
     <ThemeProvider theme={theme}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <BrowserRouter>
+          <HashRouter >
             <App />
-          </BrowserRouter>
+          </HashRouter >
         </PersistGate>
       </Provider>
     </ThemeProvider>
